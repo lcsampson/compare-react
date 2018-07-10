@@ -1,0 +1,138 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
+
+
+export default class  MyNotesAndExamples extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+        console.info("First---in constructor()")
+    }
+
+    componentDidMount() {
+        console.info("Third---in componentDidMount()")
+
+        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let
+        this.varTest();
+        this.letTest();
+        this.loopExample();
+        this.emulatingPrivateMembers();
+        this.do_something();
+
+    }
+
+    varTest() {
+        console.log("varTest() -->")
+        var x = 1;
+        if (true) {
+            var x = 2;  // same variable!
+            console.log(x);  // 2
+        }
+        console.log(x);  // 2
+    }
+
+    letTest() {
+        console.log("letTest() -->")
+        let x = 1;
+        if (true) {
+            let x = 2;  // different variable
+            console.log(x);  // 2
+        }
+        console.log(x);  // 1
+    }
+    
+    loopExample() {
+        console.log("loopExample() -->")
+        var x = 'global';
+        let y = 'global';
+        console.log("this.x", this.x); // "global"
+        console.log("this.y", this.y); // undefined
+
+        var list = document.getElementById('list');
+
+        for (let i = 1; i <= 5; i++) {
+            let item = document.createElement('li');
+            item.appendChild(document.createTextNode('Item ' + i));
+
+            item.onclick = function(ev) {
+                console.log('Item ' + i + ' is clicked.');
+            };
+            list.appendChild(item);
+        }
+
+        // to achieve the same effect with 'var'
+        // you have to create a different context
+        // using a closure to preserve the value
+        for (var i = 1; i <= 5; i++) {
+            var item = document.createElement('li');
+            item.appendChild(document.createTextNode('Item ' + i));
+
+            (function(i){
+                item.onclick = function(ev) {
+                    console.log('Item ' + i + ' is clicked.');
+                };
+            })(i);
+            list.appendChild(item);
+        }
+    }
+
+    emulatingPrivateMembers() {
+        console.log("loopExample() -->")
+        var Thing;
+
+        {
+            let privateScope = new WeakMap();
+            let counter = 0;
+
+            Thing = function() {
+                this.someProperty = 'foo';
+
+                privateScope.set(this, {
+                    hidden: ++counter,
+                });
+            };
+
+            Thing.prototype.showPublic = function() {
+                return this.someProperty;
+            };
+
+            Thing.prototype.showPrivate = function() {
+                return privateScope.get(this).hidden;
+            };
+        }
+
+        console.log(typeof privateScope);
+        // "undefined"
+
+        var thing = new Thing();
+
+        console.log(thing);
+        // Thing {someProperty: "foo"}
+
+        thing.showPublic();
+        // "foo"
+
+        thing.showPrivate();
+        // 1
+    }
+
+    do_something() {
+        console.log("do_something() -->")
+        console.log(bar); // undefined
+        console.log(foo); // ReferenceError
+        var bar = 1;
+        let foo = 2;
+    }
+
+
+    render() {
+        return (
+            <div>
+                <div id="list"></div>
+            </div>
+        );
+    }
+}

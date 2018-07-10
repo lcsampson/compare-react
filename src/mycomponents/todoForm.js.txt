@@ -1,0 +1,201 @@
+import * as React from 'react';
+import { Textbox, Checkbox, Textarea, ListBox, Popover, OverlayTrigger, Button } from 'adp-react-components';
+import TodoSlideIn from './todoSlideIn.js'
+
+/*
+ componentWillMount() is invoked immediately before mounting occurs. It is called before render(), therefore calling setState() synchronously
+ in this method will not trigger an extra rendering. Generally, we recommend using the constructor() instead.
+ */
+
+const colors = ['coquelicot', 'red', 'blue', 'amaranth', 'pink', 'eburnean', 'octarine', 'grey'];
+
+//LS:  TODO:  USE ReactDOM to get form elements
+export default class TodoForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            notes: '',
+            color: [],
+
+            showModal   : false,
+            closeable   : true,
+            backdrop    : true,
+            keyboard    : true,
+            animation   : true
+        }
+        //alert("constructor")
+    }
+
+    /*componentDidMount() is invoked immediately after a component is mounted. Initialization that requires DOM nodes should go here.
+      If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
+     */
+    componentDidMount() {
+        //alert('componentDidMount')
+    }
+
+
+    onEmailChange = (email: string) => {
+        this.setState({
+            email
+        });
+    }
+
+    onPasswordChange = (password: string) => {
+        this.setState({
+            password
+        });
+    }
+
+    onNotesChange = (notes: string) => {
+        this.setState({
+            notes
+        });
+    }
+
+    onColorChange = (color: Array<string>) => {
+        this.setState({
+            color
+        });
+    }
+
+    clearField() {
+        this.setState( { email: "" } );
+    }
+
+    submitForm() {
+        alert("email: " + this.state.email)
+        alert("password: " + this.state.password)
+        alert("notes: " + this.state.notes)
+        alert("color: " + this.state.color)
+        return false;
+    }
+
+
+
+    /*slide in */
+    /*onCloseableChange = (closeable: boolean) => {
+        this.setState({
+            closeable
+        });
+    }
+
+    onBackdropChange = (backdrop: boolean | 'static') => {
+        this.setState({
+            backdrop
+        });
+    }
+
+    onKeyboardChange = (keyboard: boolean) => {
+        this.setState({
+            keyboard
+        });
+    }
+
+    onAnimationChange = (animation: boolean) => {
+        this.setState({
+            animation
+        });
+    }*/
+
+    close = () => {
+        this.setState({
+            showModal: false
+        });
+    }
+
+    open = () => {
+        this.setState({
+            showModal: true
+        });
+    }
+
+
+    render() {
+
+        var buttonPopover = (
+            <Popover
+                id="buttonPopover"
+                title="Submit Button"
+            >
+                Click to <strong>submit</strong> your form content.
+            </Popover>
+        );
+
+
+        return (
+            <div>
+                <div>
+                    <Button onClick={ this.open }>
+                        Open slide-in Helper
+                    </Button>
+
+                    <TodoSlideIn
+                        show={ this.state.showModal }
+                        onHide={ this.close }
+                        backdrop={ this.state.backdrop }
+                        keyboard={ this.state.keyboard }
+                        animation={ this.state.animation }
+                        onClose={ this.close }
+                        closeable={ this.state.closeable }
+                    />
+                </div>
+
+                <form>
+                    <div className="form-group">
+                        <label>Email address:</label>
+                        <Textbox value={ this.state.email } id="email" placeholder="Enter email address"
+                                 onChange={ this.onEmailChange }
+                                 onClick={ () => this.clearField() } />
+                    </div>
+                    <div className="form-group">
+                        <label>Password:</label>
+                        <Textbox type="password" value={ this.state.password } id="password" onChange={ this.onPasswordChange }/>
+                    </div>
+                    <div className="form-group">
+                        <label>Notes:</label>
+                        <Textarea
+                            style={ { height: 100 } }
+                            value={ this.state.notes }
+                            id="notes"
+                            onChange={ this.onNotesChange }
+                        />
+                    </div>
+                    <div>
+                        <label>Color:</label>
+                        <ListBox
+                            multiple
+                            className="demo-list-box"
+                            data={ colors }
+                            value={ this.state.color}
+                            onChange={ this.onColorChange }
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Notes:</label>
+                        <Textarea
+                            style={ { height: 100 } }
+                            value={ this.state.notes }
+                            id="notes"
+                            onChange={ this.onNotesChange }
+                        />
+                    </div>
+                    <div className="checkbox">
+                        <Checkbox>Remember Me</Checkbox>
+                    </div>
+
+                    <div className="popover-wrapper">
+                        <OverlayTrigger
+                            trigger={['hover', 'click']}
+                            placement="right"
+                            overlay={buttonPopover}
+                        >
+                            <Button onClick={ () => this.submitForm()} >Submit</Button>
+                        </OverlayTrigger>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+}

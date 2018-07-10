@@ -1,0 +1,240 @@
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import {
+    Tabs,
+    Alert,
+    Tile,
+    Button,
+    Textbox
+} from 'adp-react-components';
+/*import Table from './framework-table';*/
+import Table from './framework-with-table-grid/src/framework-table';
+import TodoPopover from './todoPopover';
+import TodoTooltip from './todoTooltip';
+import TodoDropdownList from './todoDropdownList';
+import TodoListBox from './todoListBox';
+import TodoButtons from './todoButtons';
+import TodoForm from './todoForm';
+import TodoModal from './todoModal';
+import MyTestSlideIn from './myTestSlideIn';
+import UsingJqueryTest from './usingJqueryTest';
+import MyNotesAndExamples from "./myNotesAndExamples";
+
+const FirstTab = () => (
+    <div>
+        <h1>First</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere imperdiet ipsum, eleifend convallis orci sodales ut. Donec condimentum nunc eget libero consectetur, id dignissim magna malesuada. Aenean ornare in est id lobortis. Nulla nibh risus, fermentum eu magna eget, congue lobortis metus. Suspendisse bibendum lobortis augue, vel venenatis eros pulvinar ac. Vestibulum tempor magna eget pellentesque lacinia. Praesent a lectus non leo dignissim dignissim in ac magna. Quisque non sapien in leo ornare hendrerit. Nunc a augue lobortis, facilisis tellus id, viverra velit. Nullam nec nisi eu augue pulvinar lacinia.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere imperdiet ipsum, eleifend convallis orci sodales ut. Donec condimentum nunc eget libero consectetur, id dignissim magna malesuada. Aenean ornare in est id lobortis. Nulla nibh risus, fermentum eu magna eget, congue lobortis metus. Suspendisse bibendum lobortis augue, vel venenatis eros pulvinar ac. Vestibulum tempor magna eget pellentesque lacinia. Praesent a lectus non leo dignissim dignissim in ac magna. Quisque non sapien in leo ornare hendrerit. Nunc a augue lobortis, facilisis tellus id, viverra velit. Nullam nec nisi eu augue pulvinar lacinia.</p>
+    </div>
+);
+
+const SecondTab = () => (
+    <div>
+        <h1>Second</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere imperdiet ipsum, eleifend convallis orci sodales ut. Donec condimentum nunc eget libero consectetur, id dignissim magna malesuada. Aenean ornare in est id lobortis. Nulla nibh risus, fermentum eu magna eget, congue lobortis metus. Suspendisse bibendum lobortis augue, vel venenatis eros pulvinar ac. Vestibulum tempor magna eget pellentesque lacinia. Praesent a lectus non leo dignissim dignissim in ac magna. Quisque non sapien in leo ornare hendrerit. Nunc a augue lobortis, facilisis tellus id, viverra velit. Nullam nec nisi eu augue pulvinar lacinia.</p>
+    </div>
+);
+
+const UsingJqueryTestTab = () => (
+    <div>
+        <UsingJqueryTest />
+    </div>
+);
+
+const data1 = require('./data.json');
+const TableTab = () => (
+    <div>
+        <h1>Table Example</h1>
+        Hmmm...why aren't the styles applied???
+        <Table data={ data1 } />
+    </div>
+)
+
+//const colors = ['coquelicot', 'red', 'blue', 'amaranth', 'pink', 'eburnean', 'octarine', 'grey'];
+const ListsTab = () => (
+    <div>
+        <div className="showcase">
+            <h1>Dropdown List Examples</h1>
+            <TodoDropdownList />
+        </div>
+
+        <div className="showcase">
+            <h1>List Examples</h1>
+            <TodoListBox />
+        </div>
+
+        <div>
+            <h1>Popover Examples</h1>
+            <TodoPopover />
+        </div>
+    </div>
+)
+
+const PopoverTab = () => (
+    <div>
+        <div>
+            <h1>Popover Examples</h1>
+            <TodoPopover />
+        </div>
+    </div>
+)
+
+const TooltipTab = () => (
+    <div>
+        <div>
+            <h1>Tooltip Examples</h1>
+            <TodoTooltip />
+        </div>
+    </div>
+)
+const AlertsTab = () => (
+    <div>
+        <div className="showcase">
+            <h1>Alert Examples</h1>
+            <Alert alertStyle="inline" type="info" title="Alert Title">
+                This is an info alert
+            </Alert>
+            <Alert alertStyle="inline"  type="success">
+                Success alert without the title
+            </Alert>
+            <Alert alertStyle="inline"  type="error" title="Error" />
+            <Alert alertStyle="inline"  type="warning" title="Warning" />
+
+
+            <Alert alertStyle="default" type="info" title="Alert Title">
+                This is an info alert
+            </Alert>
+            <Alert alertStyle="default"  type="success">
+                Success alert without the title
+            </Alert>
+            <Alert alertStyle="default"  type="error" title="Error" />
+            <Alert alertStyle="default"  type="warning" title="Warning" />
+        </div>
+    </div>
+)
+
+const TilesTab = () => (
+    <div>
+        <h1> Tile Examples</h1>
+        <div className="vdl-container">
+            <div className="vdl-row tiles-demo">
+                {
+                    [1,2,3,4,5,6,7,8,9].map(
+                        (num) => <Tile key={ num } title={ 'Tile ' + num }>Lorem ipsum dolor sit amet</Tile>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+)
+
+const ButtonsTab = () => (
+    <div>
+        <h1> Button Examples</h1>
+        <TodoButtons />
+    </div>
+);
+
+const SlideInTab = () => (
+    <div>
+        <h1> SlideIn Examples</h1>
+        <MyTestSlideIn />
+    </div>
+);
+
+const ModalTab = () => (
+    <div>
+        <h1> Modal Examples</h1>
+        <TodoModal />
+    </div>
+);
+
+const MyFormTab = () => (
+    <div>
+        <h1> My Form Example</h1>
+        <TodoForm />
+    </div>
+);
+const MyExamplesTab= () => (
+    <div>
+        <h1> My Code Examples</h1>
+        <MyNotesAndExamples />
+    </div>
+);
+
+const tabsData= [
+    { id: 'first',       label: 'First',        alert: false, tabContentElement: FirstTab },
+    /*{ id: 'second',      label: 'Second',       alert: false, tabContentElement: SecondTab }, */
+    { id: 'usingJqueryTest',    label: 'Using Jquery',       alert: false, tabContentElement: UsingJqueryTestTab },
+    { id: 'tableTab',    label: 'Table',        alert: false, tabContentElement: TableTab },
+    { id: 'listsTab',    label: 'Lists',        alert: false, tabContentElement: ListsTab },
+    { id: 'popoverTab',  label: 'Popovers',     alert: false, tabContentElement: PopoverTab },
+    { id: 'tooltipTab',  label: 'Tooltips',     alert: false, tabContentElement: TooltipTab },
+    { id: 'alertsTab',   label: 'Alerts',       alert: false, tabContentElement: AlertsTab },
+    { id: 'tilesTab',    label: 'Tiles',        alert: false, tabContentElement: TilesTab },
+    { id: 'buttonsTab',  label: 'Buttons',      alert: false, tabContentElement: ButtonsTab },
+    { id: 'slideInTab',  label: 'SlideIn',      alert: false, tabContentElement: SlideInTab },
+    { id: 'modalTab',    label: 'Modal',      alert: false, tabContentElement: ModalTab },
+    { id: 'myFormTab',   label: 'Form',         alert: false, tabContentElement: MyFormTab },
+    { id: 'myExamplesTab',   label: 'Examples',         alert: false, tabContentElement: MyExamplesTab }
+]
+
+export default class CustomTabs extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: 'first',
+            orientation: 'horizontal',
+            busy: false,
+            buttonStyle: 'primary'
+        }
+    }
+
+    onValueChange = (value) => {
+        console.log(value);
+        this.setState({
+            value
+        });
+    }
+
+
+    render() {
+        let TabContent = tabsData.find( (item) => item.id === this.state.value ).tabContentElement;
+
+        return (
+            <div>
+                <div className="showcase">
+                    <Tabs
+                        orientation={ this.state.orientation }
+                        data={ tabsData }
+                        textField="label"
+                        valueField="id"
+                        value={ this.state.value }
+                        onChange={ this.onValueChange }
+
+                    > {/* itemComponent={ this.state.customTabItem ? ItemComponent : undefined } */}
+                        <TabContent />
+                    </Tabs>
+                </div>
+            </div>
+        );
+    }
+}
+
+{/*const ItemComponent =(props) => (
+    <div>
+        <p>
+            { props.item.label }
+            {
+                props.item.alert && <AlertIcon style={ { color: '#d40f0f', marginLeft: 5} } />
+            }
+        </p>
+        <div style={ { fontSize: 13, fontWeight: 300 } } >
+            Secondary text with additional line
+        </div>
+    </div>
+)
+
+ItemComponent.propTypes = {
+    item: PropTypes.any
+}*/}

@@ -1,0 +1,200 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import fetch from 'node-fetch';
+import $ from 'jquery';
+
+
+/* You can use any AJAX library you like with React. Some popular ones are Axios, jQuery AJAX, and the browser built-in window.fetch. */
+/* Fetch is a new, simple and standardised API that aims to unify fetching across the web and replace XMLHttpRequest.
+   It has a polyfill for older browsers and should be used in modern web apps. Fetch is the new standardised API to interact with remote resources*/
+
+
+const ddList = ['Apps', 'Films'];
+const ddListValue = ['software', 'movie'];
+
+export default class  MyAjaxComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            items: [],
+            name: '',
+            company:'',
+            entity: ''
+        };
+        console.info("First---in constructor()")
+    }
+
+    componentDidMount() {
+        console.info("Third---in componentDidMount()")
+        ReactDOM.findDOMNode(this.refs.query).focus();        //this.createAjax();
+
+        {/* jQuery $.ajax
+            $.ajax({
+                url: "https://itunes.apple.com/search?term=test&country=us&entity=software", //this.props.url,
+                dataType: 'json',
+                cache: false,
+                success: function(data) {
+                    console.debug("data ", JSON.stringify(data, null, '\t'));
+                    //$.map( data.results, function( val, i ) {
+                        //console.info("items[] ", val.primaryGenreName, "---  Seller Name: ", val.sellerName);
+                    //});
+                    //console.debug( "data type of data.results", $.type(data.results) )
+
+                    var arr = JSON.parse(JSON.stringify(data.results));
+                    this.setState({items: arr, isLoaded: true}); // Notice this
+                    //console.log(this.state.items)
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    this.setState({error: err});
+                    //// console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        */}
+
+        {/* Fetch API   - $ npm install node-fetch --save
+            //  import fetch from 'node-fetch';
+            //  https://github.com/bitinn/node-fetch
+            fetch(this.props.url).then(function(response){
+                // perform setState here
+            });
+        */}
+
+        {/*  Superagent
+             request.get(this.props.url).end(function(err,res){
+                // perform setState here
+             });
+        */}
+
+        {/* Axios
+            axios.get(this.props.url).then(function(response){
+                // perform setState here
+            }).catch(function(error){
+                //Some error occurred
+            });
+        */}
+
+        {/* Request
+            request(this.props.url, function(err, response, body){
+                // perform setState here
+            });
+         */}
+
+        {/*
+            fetch("https://itunes.apple.com/search?term=test&country=us&entity=software")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result.items
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+         */}
+    }
+
+
+    onValueChange = (entity) => {
+        this.setState({
+            entity: ddListValue[ddList.indexOf(entity)]
+        });
+    }
+
+    createAjax() {
+        if (ReactDOM.findDOMNode(this.refs.query).value != "undefined") {
+            var query = ReactDOM.findDOMNode(this.refs.query).value;
+            var category =  this.state.entity;// ReactDOM.findDOMNode(this.refs.category).value;  //this.state.entity;
+            alert(category)
+            URL = "https://itunes.apple.com/search?term=" + query + "&country=us&entity=" + category;
+        }
+
+        $.ajax({
+            url: URL,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                console.debug("data ", JSON.stringify(data, null, '\t'));
+                /*$.map( data.results, function( val, i ) {
+                 console.info("items[] ", val.primaryGenreName, "---  Seller Name: ", val.sellerName);
+                 });*/
+                //console.debug( "data type of data.results", $.type(data.results) )
+
+                var arr = JSON.parse(JSON.stringify(data.results));
+                this.setState({items: arr, isLoaded: true}); // Notice this
+                //console.log(this.state.items)
+            }.bind(this),
+            error: function(xhr, status, err) {
+                this.setState({error: err});
+                //// console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    }
+
+    render() {
+        console.info("Second -- render()")
+        const { error, isLoaded, items } = this.state;
+
+        if (error) {
+            return <div>Error: {error.message}</div>;
+            {/*
+            } else if (!isLoaded) {
+            return
+                 <div>Loading...</div>
+             */}
+        } else {
+            return (
+                <div>
+                    <div>
+
+                        <div className="myLeft">
+                            <input ref="query" type="text"/>
+
+                            <select ref="category">
+                                <option value="software">Apps</option>
+                                <option value="movie">Films</option>
+                            </select>
+                        </div>
+                        <div className="myRight">
+                            <button type="button"
+                                    onClick={ () => this.createAjax() } >
+                                <span>Submit</span>
+                            </button>
+                        </div>
+
+
+                        { /*For: <input ref="queryx" type="text"/>
+                        Entity:
+                        <select ref="categoryx">
+                            <option value="software">Apps</option>
+                            <option value="movie">Films</option>
+                        </select>
+                        <Button onClick={ () => this.createAjax()} >Submit</Button>*/}
+
+                        <div className="clearfix"></div>
+                    </div>
+                    <div>
+                        <ul>
+                            {items.map(item => (
+                                <li key={item.trackId}>
+                                    <div className="myLeft one">{item.sellerName}</div> <div className="myLeft two"> {item.primaryGenreName} </div>
+                                    <div className="myLeft two"> {item.trackName} </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+    }
+}

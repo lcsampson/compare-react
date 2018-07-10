@@ -1,0 +1,60 @@
+import React from 'react';
+
+export default class InputField extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { value: this.props.todoText };
+
+        this.handleChange = this.handleChange.bind(this); // bind for es5; not needed for es6...within the same component
+        this.clearField = this.clearField.bind(this); // bind for es5; not needed for es6...within the same component
+        //this.addItem = this.addItem.bind(this);  -- bind not needed because onClick is using ES6
+    }
+
+    handleChange(e) {
+        this.setState( { value: e.target.value } );
+    }
+
+    clearField() {
+        this.setState( { value: "" } );
+    }
+
+    /*handleChange = (e) => {
+        this.setState( { value: e.target.value } );
+    }
+
+    clearField = () => {
+        this.setState( { value: "" } );
+    }*/
+
+    addItem(item) {
+        //alert("NOTE:  you don't need to pass in the value on the button click.  it's in the state: " + this.state.value)
+        console.log("inputField addItem() item: " + item)
+        if (item.length > 0) {
+            this.props.addItem(item); // from the parent (App.js)...passed as a prop
+            this.setState( { value: "" } );
+        }
+    }
+
+    render(){
+        return (
+            <div>
+                {/*
+                <input type="text" value={this.state.value} className="form-control" onChange={this.handleChange} onFocus={this.clearField} />
+                <button className="btn btn-primary" onClick={ () => this.addItem(this.state.value)}>Add</button>
+                */}
+                <div className="myLeft">
+                    <div>
+                        <input type="text" value={this.state.value} onChange={this.handleChange} onFocus={this.clearField} />
+                    </div>
+                </div>
+                <div className="myRight">
+                    <button type="button"
+                            onClick={ () => this.addItem(this.state.value)}>
+                        <span>Add</span>
+                    </button>
+                </div>
+                <div className="clearfix"></div>
+            </div>
+        )
+    };
+}

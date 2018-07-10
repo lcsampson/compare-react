@@ -1,0 +1,52 @@
+.App {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    text-align: center;
+    font-size: 26px;
+}
+
+input {
+    margin: 5px;
+}
+.list-item {
+    display: inline-block;
+}
+.todo-form {
+    padding: 5px;
+}
+.delete-button {
+    float: right;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.todoTabWidth {
+    padding-top: 10px;
+    width: 60%;
+}
+
+.myLeft{
+    float:left;
+}
+.myRight{
+    float:left;
+    padding-left:20px;
+    padding-top: 5px;
+}
+.one,
+.two {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 20px;
+}
+
+.clearfix {
+    clear: both;
+}

@@ -1,0 +1,78 @@
+import React, { Component } from 'react';
+import './App.css';
+
+import Header from './components/header';
+import InputField from './components/inputField';
+import Item from './components/item';
+
+
+import MyAjaxComponent from './components/myAjaxComponent'
+
+
+class App extends Component{ //parent
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: [],
+            id: 0
+        };
+
+        this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
+    }
+
+    deleteItem(id) {
+        this.setState({
+           items: this.state.items.filter((item, index) => item.id !== id)
+        });
+
+        --this.state.id;
+    }
+
+    addItem(itemText) {
+        console.log("app addItem() itemText: " + itemText);
+
+        let toDoItems = this.state.items.slice();
+        toDoItems.push(
+            {
+                id: this.state.id,
+                text: itemText
+            }
+        );
+
+        this.setState(
+            {
+                items: toDoItems,
+                id: ++this.state.id
+            }
+        );
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <div>
+                    <Header className="title" owner={this.props.owner} />
+                    <InputField todoText="Enter a todo task here!" addItem={this.addItem} />
+
+                    <ul>
+                        {
+                            this.state.items.map( (item) => {
+                                return <Item todoItem={item} key={item.id} id={item.id}  deleteItem={this.deleteItem} />;
+
+                            })
+                        }
+                    </ul>
+                </div>
+
+                <div>
+                    <h1>Load data Example</h1>
+                    <MyAjaxComponent />
+                </div>
+
+            </div>
+        );
+    }
+};
+
+export default App;

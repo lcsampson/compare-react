@@ -1,0 +1,25 @@
+import React from 'react';
+
+export default class Item extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    //binding not needed because onClick is using ES6
+    deleteItem(id) {
+        //alert("item.js deleteItem() : " +id)
+        this.props.deleteItem(id);
+    }
+
+    render() {
+        return(
+            <div>
+                {this.props.todoItem.text} &nbsp;
+                <div className="list-item delete-button"
+                     onClick={ (e) => this.deleteItem(this.props.id) }>
+                    &#x2715;
+                </div>
+            </div>
+        )
+    }
+}
